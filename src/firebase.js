@@ -4,14 +4,14 @@ import { getDatabase } from "firebase/database";
 import { getStorage } from "firebase/storage"; // Import Firebase Storage
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD_jr_1XXUEFF67fIVngCM5doxExrbvjhM",
-    authDomain: "ouranos-5ad1e.firebaseapp.com",
-    databaseURL: "https://ouranos-5ad1e-default-rtdb.firebaseio.com",
-    projectId: "ouranos-5ad1e",
-    storageBucket: "ouranos-5ad1e.appspot.com",
-    messagingSenderId: "426815933674",
-    appId: "1:426815933674:web:4243c7e6c6ee2966a21b93",
-    measurementId: "G-HT62BXMYVD",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initializing Firebase
