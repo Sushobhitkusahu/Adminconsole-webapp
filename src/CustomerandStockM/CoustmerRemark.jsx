@@ -131,12 +131,14 @@ const CustomerRemark = ({  customerId }) => {
                             placeholder="Enter your remark"
                             required
                         />
+                        <div className='flex justify-center items-center'>
                         <button
                             onClick={handleAddRemark}
-                            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="py-2 px-10 rounded-lg  bg-blue-600 text-white  hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             Add
                         </button>
+                        </div>
                     </div>
                 </Portal>
             )}

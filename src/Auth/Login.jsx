@@ -30,7 +30,7 @@ const Login = () => {
                 // Role exists, retrieve it and store it locally
                 const role = snapshot.val();
                 localStorage.setItem('userRole', role);
-                console.log('User Role:', role);
+             //   console.log('User Role:', role);
             } else {
                 // Role node doesn't exist, set a default role
                 const defaultRole = "employee";

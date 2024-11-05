@@ -7,18 +7,19 @@ import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [userRole, setUserRole] = useState(null);
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const storedRole = localStorage.getItem('userRole');
         if (storedRole) {
             setUserRole(storedRole);
         }
+        setLoading(false);
     }, []);
     
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
     };
-
+    if (loading) return null;
     return (
         <>
             {/* Hamburger Menu for tablet and mobile view */}
