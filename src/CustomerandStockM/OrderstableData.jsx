@@ -1,7 +1,7 @@
 import { useParams, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faFileArrowUp, faTrash,} from '@fortawesome/free-solid-svg-icons';
-import { ref, onValue, update,  } from "firebase/database";
+import { faDownload, faFileArrowUp, faTrash, } from '@fortawesome/free-solid-svg-icons';
+import { ref, onValue, update, set } from "firebase/database";
 import { uploadBytesResumable, getDownloadURL, ref as storageRef } from "firebase/storage";
 import { db, storage } from '../firebase';
 import Portal from './Portals';
@@ -21,8 +21,101 @@ const OrdersNew = () => {
     const [macAddressesData, setMacAddressesData] = useState([]);
     const [imeiDetails, setImeiDetails] = useState([]);
     const [deleteOrder, setDeleteOrder] = useState(null)
-    const [deleteDevice,setDeleteDevice]=useState(null);
+    const [deleteDevice, setDeleteDevice] = useState(null);
+    ///
+    const [newItem, setNewItem] = useState('');
+    const [showAddOrder, setShowAddOrder] = useState(false);
+    const initialFormData = {
+        amountDue: '',
+        date: '',
+        totalAmount: '',
+        invoiceId: '',
+        channel: '',
+        salesPersonName: '',
+        orderItems: [] // Array to hold items
+    };
+    const [formData, setFormData] = useState(initialFormData)
+    // Function to reset form data
+    const resetFormData = () => {
+        setFormData(initialFormData);
+        setNewItem(''); // Reset the new item input field
+    };
+    const handleShowAddOrder = () => {
+        resetFormData(); // Reset the form data when opening the form
+        setShowAddOrder(true); // Show the form
+    };
 
+    const handleAddInput = (e) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value,
+        }));
+    }
+    const handleAddItem = (e) => {
+        e.preventDefault();
+        if (newItem.trim()) {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                orderItems: [...prevFormData.orderItems, newItem],
+            }));
+            setNewItem(''); // Reset new item input field
+        }
+    };
+    const handleAddOrder = async () => {
+
+        const { amountDue, date, totalAmount, invoiceId, channel, salesPersonName, orderItems } = formData;
+        if (!amountDue || !date || !totalAmount || !invoiceId || !channel || !salesPersonName || orderItems.length === 0) {
+            toast.error("Please fill all fields and add at least one order item.");
+            return; // Prevent further execution if validation fails
+        }
+
+        const uniqueOrderId = `O${Math.floor(10000000 + Math.random() * 90000000)}`;// e.g., O1728542971
+        try {
+            const newOrderRef = ref(db, `ordersNew/${uniqueOrderId}`);
+            await set(newOrderRef, {
+                ...formData,
+                customerId: orderId // Save the orderId directly as customerId
+            });
+            toast.success("Order added successfully!");
+            setShowAddOrder(false); // Close the portal
+        } catch (error) {
+            console.error("Error adding order:", error);
+            toast.error("Failed to add order. Please try again.");
+        }
+    }
+
+    useEffect(() => {
+
+        const ordersRef = ref(db, 'ordersNew');
+        onValue(ordersRef, (snapshot) => {
+            const ordersData = [];
+            if (snapshot.exists()) {
+                snapshot.forEach((childSnapshot) => {
+                    const data = childSnapshot.val();
+
+                    if (data.customerId === orderId) {
+                        ordersData.push({
+                            id: childSnapshot.key,
+                            ...data,
+                        });
+                    }
+                });
+                setOrders(ordersData);
+            } else {
+                console.log('No orders available');
+            }
+        }, (error) => {
+            console.error("Error fetching data:", error);
+        });
+    }, [orderId]);
+    const handleRemoveItem = (index) => {
+        setFormData((prevFormData) => {
+            const updatedOrderItems = prevFormData.orderItems.filter((_, i) => i !== index);
+            return { ...prevFormData, orderItems: updatedOrderItems };
+        });
+    };
 
     useEffect(() => {
         if (phoneNo) {
@@ -45,14 +138,14 @@ const OrdersNew = () => {
                                 const firstStartDate = macDetails?.first_start
                                     ? new Date(macDetails.first_start).toLocaleString()
                                     : null;
-                            const rechargedate=macDetails?.recharge_validity?new Date(macDetails.recharge_validity).toLocaleString()
-                            :null
+                                const rechargedate = macDetails?.recharge_validity ? new Date(macDetails.recharge_validity).toLocaleString()
+                                    : null
 
                                 resolve({
                                     macAddress,
                                     first_start: firstStartDate,
                                     referralCode: macDetails?.referralCode,
-                                    recharge_validity:rechargedate,
+                                    recharge_validity: rechargedate,
                                 });
                             });
                         });
@@ -109,30 +202,7 @@ const OrdersNew = () => {
 
 
 
-    useEffect(() => {
 
-        const ordersRef = ref(db, 'ordersNew');
-        onValue(ordersRef, (snapshot) => {
-            const ordersData = [];
-            if (snapshot.exists()) {
-                snapshot.forEach((childSnapshot) => {
-                    const data = childSnapshot.val();
-
-                    if (data.customerId === orderId) {
-                        ordersData.push({
-                            id: childSnapshot.key,
-                            ...data,
-                        });
-                    }
-                });
-                setOrders(ordersData);
-            } else {
-                console.log('No orders available');
-            }
-        }, (error) => {
-            console.error("Error fetching data:", error);
-        });
-    }, [orderId]);
 
 
     const handleFileChange = (orderId) => (e) => {
@@ -199,7 +269,7 @@ const OrdersNew = () => {
         }
     };
 
-    
+
     const [deletedItems, setDeletedItems] = useState(new Set());
     /////////////////
     const handleDelete = async (imei) => {
@@ -207,20 +277,35 @@ const OrdersNew = () => {
             const order_refer = ref(db, `qr/admin/${imei}`);
             await update(order_refer, { isDeleted: true });
             setDeletedItems(prev => new Set(prev).add(imei));
-            
+
             toast.success(`Order ${imei} marked as deleted.`);
         } catch (error) {
             toast.error(`Failed to delete order: ${error.message}`);
         }
-         finally {
+        finally {
             setDeleteDevice(null)
         }
     };
-    
-  
+
+
     return (
-        <div className="max-w-6xl mx-auto">  <ToastContainer />
-            <h2 className="text-lg font-semibold my-4">Orders for Customer ID: {orderId}</h2>
+        <div className="max-w-6xl mx-auto ">  <ToastContainer />
+
+            <h2 className="text-lg font-semibold my-4">Orders for Customer ID: {orderId} </h2>
+            <div className='flex justify-end items-end '>
+                <button type='button'
+                    onClick={handleShowAddOrder}
+                    className="px-4 py-2 mb-2 rounded-lg text-xs text-white font-medium bg-blue-600"
+                >
+                    Add Order
+                </button>
+
+            </div>
+
+
+
+
+
             <table className="min-w-full bg-white border border-gray-300  divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>
@@ -293,14 +378,158 @@ const OrdersNew = () => {
 
                     </tr>
                 </thead>
+                {showAddOrder && (
+                    <Portal onClose={() => setShowAddOrder(false)}>
+                        <ToastContainer />
+                        <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">Add New Order</h2>
+
+                        <div className='flex whitespace-nowrap'>
+                            <strong className='font-thin text-xs mt-2'>Amount Due </strong>
+                            <input
+                                type="number"
+                                name="amountDue"
+                                value={formData.amountDue}
+                                onChange={handleAddInput}
+                                className="ml-3 border block w-full rounded mb-2 px-3 py-1 my-1 text-xs font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                                placeholder="Enter Amount"
+                            />
+                        </div>
+
+                        <div className='flex whitespace-nowrap'>
+                            <strong className='font-thin text-xs mt-2'>Date of Order</strong>
+                            <input
+                                type="date"
+                                name="date"
+                                value={formData.date}
+                                onChange={handleAddInput}
+                                className="ml-1 border block w-full rounded mb-2 px-3 py-1 my-1 text-xs font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                                placeholder="Enter Amount"
+                            />
+                        </div>
+
+                        <div className='flex whitespace-nowrap'>
+                            <strong className='font-thin text-xs mt-2'>Total Amount</strong>
+                            <input
+                                type="number"
+                                name="totalAmount"
+                                value={formData.totalAmount}
+                                required
+                                onChange={handleAddInput}
+                                className="ml-1 border block w-full rounded mb-2 px-3 py-1 my-1 text-xs font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                                placeholder="Enter Amount"
+                            />
+                        </div>
+
+                        <div className='flex whitespace-nowrap'>
+                            <strong className='font-thin text-xs mt-2'>Invoice ID</strong>
+                            <input
+                                type="text"
+                                name="invoiceId"
+                                value={formData.invoiceId}
+                                required
+                                onChange={handleAddInput}
+                                className="ml-6 border block w-full rounded mb-2 px-3 py-1 my-1 text-xs font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                                placeholder="Enter Amount"
+                            />
+                        </div>
+
+                        <div className='flex whitespace-nowrap'>
+                            <strong className='font-thin text-xs mt-2'>Channel</strong>
+                            <input
+                                type="text"
+                                name="channel"
+                                value={formData.channel}
+                                required
+                                onChange={handleAddInput}
+                                className="ml-8 border block w-full rounded text-xs mb-2 px-3 py-1 my-1 font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                                placeholder="Provide channel of Sales"
+                            />
+                        </div>
+
+                        <div className='flex whitespace-nowrap'>
+                            <strong className='font-thin text-xs mt-2'>Salesperson</strong>
+                            <input
+                                type="text"
+                                name="salesPersonName"
+                                value={formData.salesPersonName}
+                                required
+                                onChange={handleAddInput}
+                                className="ml-3 border block w-full rounded mb-2 px-3 py-1 my-1 text-xs font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                                placeholder="Enter Name"
+                            />
+                        </div>
+
+                        {/* Order Items Input */}
+
+                        <div className='flex whitespace-nowrap'>
+                            <strong className='font-thin text-xs mt-2'>Items</strong>
+                            <input
+                                type="text"
+                                value={newItem}
+                                onChange={(e) => setNewItem(e.target.value)}
+                                required
+
+                                placeholder="Enter Order Item"
+                                className="ml-12 border block w-full rounded mb-2 px-3 py-1 my-1 text-xs font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+
+                            />
+
+                        </div>
+
+                        <div>
+                            {/* List of order items with remove functionality */}
+                            <ul className="list-disc pl-5">
+                                {formData.orderItems.map((item, index) => (
+                                    <li key={index} className="flex justify-between items-center text-sm text-gray-700 dark:text-gray-300">
+                                        {item}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveItem(index)}
+                                            className="ml-2 text-red-600 hover:text-red-800"
+                                        >
+                                            Remove
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div className='flex whitespace-nowrap justify-center m-2' >
+                            <button
+                                type="button"
+                                onClick={handleAddItem}
+                                className="px-4 py-2 font-medium tracking-wide text-white hover:bg-blue-500 bg-blue-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                            >
+                                Add Item
+                            </button>
+                        </div>
+
+                        <div className="mt-4 flex justify-center gap-4">
+                            <button
+                                type="button"
+                                onClick={handleAddOrder}
+                                className="px-2 py-2 font-medium tracking-wide hover:bg-green-400 text-white capitalize transition-colors duration-300 transform bg-green-600 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                            >
+                                Save Order
+                            </button>
+                        </div>
+
+
+                        
+
+                        
+                    </Portal>
+                )}
+
+
                 {deleteOrder && (
                     <Portal onClose={() => setDeleteOrder(null)}>
-                        <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">⚠️Confirm Delete⚠️</h2>
+                        <h2 className="text-lg font-medium  text-gray-800 dark:text-white mb-4">⚠️Confirm Delete⚠️</h2>
                         <p className="text-sm text-gray-600 dark:text-gray-300">Are you sure you want to delete this order?</p>
                         <div className="mt-4 flex justify-center gap-4">
                             <button
                                 onClick={() => handleDeleteOrder(deleteOrder)}
-                                className="px-8 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-80"
+                                className="px-5 py-2 hover:bg-blue-500 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-80"
                             >
                                 Confirm
                             </button>
@@ -309,7 +538,7 @@ const OrdersNew = () => {
                 )
                 }
 
-                {deleteDevice &&(
+                {deleteDevice && (
                     <Portal onClose={() => setDeleteDevice(null)}>
                         <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4 ">⚠️Confirm Delete⚠️ </h2>
                         <p className="text-sm text-gray-600 dark:text-gray-300">Are you sure you want to delete this Device?</p>
@@ -326,7 +555,7 @@ const OrdersNew = () => {
                 )
 
                 }
-              
+
                 {/* Add Remark Portal */}
 
 
@@ -448,7 +677,7 @@ const OrdersNew = () => {
                                 {/*  */}
                                 <td className="px-1 py-2 text-xs whitespace-nowrap">
                                     <div className="flex items-center ">
-                                       
+
                                         <OrderRemark orderId={order.id} />
                                     </div>
                                 </td>
@@ -461,7 +690,7 @@ const OrdersNew = () => {
                     )}
 
 
-                    
+
 
 
 
@@ -528,16 +757,16 @@ const OrdersNew = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {macAddressesData.map(({ macAddress, first_start, referralCode,recharge_validity }) => {
+                    {macAddressesData.map(({ macAddress, first_start, referralCode, recharge_validity }) => {
                         const imeiDetail = imeiDetails.find(imeiEntry => {
                             return imeiEntry.foundMacs && imeiEntry.foundMacs.includes(macAddress);
                         }) || {};
-                    
+
                         const isDeleted = deletedItems.has(imeiDetail.imei);
                         const rowClass = isDeleted ? 'opacity-50 pointer-events-none' : '';
-                        
+
                         return (
-                            <tr key={macAddress}  className={rowClass} >
+                            <tr key={macAddress} className={rowClass} >
                                 <td className="px-1 py-2 text-xs whitespace-nowrap">
                                     <div className="flex items-center ">
                                         {macAddress || '-'}
@@ -560,7 +789,7 @@ const OrdersNew = () => {
                                 </td>
                                 <td className="px-6 py-2 text-xs whitespace-nowrap">
                                     <div className="flex items-center ">
-                                        {recharge_validity|| '-'}
+                                        {recharge_validity || '-'}
                                     </div>
                                 </td>
                                 <td className="px-6 py-2 text-xs whitespace-nowrap">
@@ -575,8 +804,8 @@ const OrdersNew = () => {
                                 </td>
                                 <td className="px-4 py-2 text-xs whitespace-nowrap">
                                     <div className="flex items-center ">
-                                    {/* here comes device remark */}
-                                        <DeviceRemark imei={imeiDetail.imei}/>
+                                        {/* here comes device remark */}
+                                        <DeviceRemark imei={imeiDetail.imei} />
 
 
                                     </div>

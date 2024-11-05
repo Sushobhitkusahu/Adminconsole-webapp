@@ -88,14 +88,17 @@ const generatorPassword =()=>{
 
     // Function to send a welcome email
     const sendMail = async (recipientEmail,password) => {
-        console.log ("YOUR EMAIL",recipientEmail)
+       // console.log ("YOUR EMAIL",recipientEmail)
         try {
             const response = await axios.post('https://own-server-e149.onrender.com/send-email', {
                 to: recipientEmail,
                 subject: "Welcome to the admin console",
                 message: `Welcome to the admin console! Your login credentials are:\n\nEmail: ${recipientEmail}\nPassword: ${password}`,
             });
-            toast.success(response.data.message || 'Email sent successfully!');
+            toast.success(response.data.message || 'Email sent successfully!',{
+                autoClose: 2000,
+                position:'top-center',
+            });
         } catch (error) {
             console.error("Error sending email:", error);
             toast.error("Failed to send email.");
@@ -140,20 +143,61 @@ const generatorPassword =()=>{
             </div>
 
             {/* Users Table */}
-            <table className="w-full border-collapse border border-gray-300">
-                <thead className="bg-gray-100">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                        <th className="border p-2">Identifier</th>
-                        <th className="border p-2">Providers</th>
-                        <th className="border p-2">Role</th>
+
+                        <th 
+                            className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+
+                            <div className="flex justify-start">
+
+                                <span> Identifier</span>
+                            </div>
+
+                               </th>
+                        <th
+                            className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+
+                            <div className="flex justify-start">
+
+                                <span>  Providers</span>
+                            </div>
+
+                        </th>
+                        
+                        <th
+                            className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+
+                            <div className="flex justify-start">
+
+                                <span>Role</span>
+                            </div>
+
+                        </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"> 
                     {users.map((user) => (
                         <tr key={user.email}>
-                            <td className="border p-2">{user.email}</td>
-                            <td className="border p-2">Email</td>
-                            <td className="border p-2">{user.role || 'N/A'}</td>
+                            <td className="px-1 py-2 text-xs whitespace-nowrap">
+                                <div className="flex items-center ">
+                                    {user.email}
+                                </div>
+                            </td>    
+                            <td className="px-1 py-2 text-xs whitespace-nowrap">
+                                <div className="flex items-center ">
+                                    Email
+                                </div>
+                            </td>    
+
+                            <td className="px-1 py-2 text-xs whitespace-nowrap">
+                                <div className="flex items-center ">
+                                    {user.role||'N/A'}
+                                </div>
+                            </td>    
+
+
                         </tr>
                     ))}
                 </tbody>

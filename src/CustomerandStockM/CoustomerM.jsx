@@ -14,7 +14,7 @@ const CustomerM = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector(state => state.orders)
   const [currentPage, setCurrentPage] = useState(1);
-  const [ordersPerPage] = useState(5);
+  const [ordersPerPage] = useState(8);
   const [editingOrder, setEditingOrder] = useState(null);
   const [deleteOrder, setDeleteOrder] = useState(null);
   const [enteredOrderId, setEnteredOrderId] = useState('');
@@ -59,8 +59,22 @@ const CustomerM = () => {
     setDeleteOrder(orderId);
     setEnteredOrderId(''); // Clear the input field
   };
+  const [userRole, setUserRole] = useState(null);
+  useEffect(()=>{
+    const storedRole = localStorage.getItem('userRole');
+    if (storedRole) {
+      setUserRole(storedRole);
+    }
+
+  },[])
 
   const handleDelete = async (orderId) => {
+    //console.log('Current user role:', userRole); // Log the userRole
+    if (userRole !== 'admin' && userRole !== 'manager') {
+      toast.error('Unauthorized: Only admins or managers can delete orders.');
+      return;
+    }
+
     if (enteredOrderId !== deleteOrder) {
       toast.error('Order ID does not match!');
       return;
@@ -202,7 +216,7 @@ const CustomerM = () => {
 
    //console.log(`Phone number for order ${orderId}: ${phoneNoString}`);
    const cleanedSearchTerm = searchTerm.replace(/[^\d]/g, "");
-   console.log(`Cleaned phone number: ${phoneNoString}, Cleaned search term: ${cleanedSearchTerm}`);
+   //console.log(`Cleaned phone number: ${phoneNoString}, Cleaned search term: ${cleanedSearchTerm}`);
 
     return (
       orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -283,7 +297,7 @@ const CustomerM = () => {
                           <span>Remark </span>
                         </div>
                       </th>
-                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <th scope="col" className=" py-3.5 px-1 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <div className="flex items-center gap-x-3">
 
                           <span>Delete </span>
@@ -675,6 +689,7 @@ const CustomerM = () => {
       )}
       {deleteOrder && (
         <Portal onClose={() => setDeleteOrder(null)}>
+          <ToastContainer/>
           <h2 className="text-lg font-semibold">Confirm Deletion</h2>
           <p className="mt-2">Please <strong>TYPE</strong> the OrderID: {deleteOrder} to Delete.</p>
           <input

@@ -138,12 +138,15 @@ const DeviceRemark = ({ imei }) => {
                                 placeholder="Enter your remark"
                                 required
                             />
-                            <button
-                                onClick={handleAddRemark}
-                                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            >
-                                Add
-                            </button>
+                            <div className='flex justify-center items-center'>
+                                <button
+                            onClick={handleAddRemark}
+                            className="py-2 px-10 rounded-lg  bg-blue-600 text-white  hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                            Add
+                                </button>
+                            </div>
+                            
                         </div>
                     </Portal>
                 )}
