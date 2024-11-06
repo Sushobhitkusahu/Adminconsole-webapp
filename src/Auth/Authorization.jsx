@@ -108,19 +108,19 @@ const generatorPassword =()=>{
     return (
         <div className="container mx-auto p-4">
             <ToastContainer />
-            <h2 className="text-xl font-bold mb-4">Assign Role</h2>
+            <h2 className="text-white text-2xl font-bold mb-4">Assign Role</h2>
             <div className="mb-6 flex">
                 <input
                     type="email"
                     placeholder="User Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="border rounded p-2 mr-4"
+                    className="border text-white bg-[#333333] rounded p-2 mr-4"
                 />
                 <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="border rounded p-2 mr-4"
+                    className="border text-white bg-[#333333] rounded p-2 mr-4"
                 >
                     <option value="">Select Role</option>
                     {currentUserRole === 'admin' && (
@@ -137,27 +137,28 @@ const generatorPassword =()=>{
                         </>
                     )}
                 </select>
-                <button onClick={handleAssignRole} className="bg-blue-500 text-white rounded p-2">
+                <button onClick={handleAssignRole} className="bg-[#2977a4] text-white rounded p-2">
                     Assign Role
                 </button>
             </div>
 
             {/* Users Table */}
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-800">
+            
+            <table className="min-w-full text-white divide-y divide-gray-700 dark:divide-gray-700 rounded-xl ">
+                <thead className="bg-[#2F2F2F] dark:bg-gray-800 rounded-t-xl">
                     <tr>
 
                         <th 
-                            className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            className="  py-3.5  px-2 text-sm font-normal text-left rtl:text-right  dark:text-gray-400">
 
-                            <div className="flex justify-start">
+                            <div className=" flex justify-start">
 
                                 <span> Identifier</span>
                             </div>
 
                                </th>
                         <th
-                            className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right  dark:text-gray-400">
 
                             <div className="flex justify-start">
 
@@ -167,7 +168,7 @@ const generatorPassword =()=>{
                         </th>
                         
                         <th
-                            className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right dark:text-gray-400">
 
                             <div className="flex justify-start">
 
@@ -177,7 +178,7 @@ const generatorPassword =()=>{
                         </th>
                     </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"> 
+                <tbody className="bg-[#494F55] divide-y divide-gray-700 dark:divide-gray-700 dark:bg-gray-900"> 
                     {users.map((user) => (
                         <tr key={user.email}>
                             <td className="px-1 py-2 text-xs whitespace-nowrap">
@@ -202,6 +203,7 @@ const generatorPassword =()=>{
                     ))}
                 </tbody>
             </table>
+            
         </div>
     );
 };

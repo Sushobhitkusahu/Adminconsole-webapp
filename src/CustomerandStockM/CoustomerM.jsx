@@ -232,14 +232,17 @@ const CustomerM = () => {
       <section className="container px-4 mx-auto h-full">
 
         <div className="  gap-x-3">
-          <h2 className="text-lg  font-medium text-gray-800 dark:text-white">Order Details</h2>
+          <h2 className="text-2xl  font-medium text-white dark:text-white">Order Details</h2>
         </div>
         <div className='flex justify-end h-12'>
 
           <button
             type='button'
             onClick={() => setIsAddingOrder(true)}
-            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            className="text-white bg-gradient-to-br from-purple-600
+             to-blue-500 hover:bg-gradient-to-bl focus:ring-4 
+             focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium
+              rounded-lg text-sm px-5 py-1 text-center me-2 mb-4 "
           >
             Add Records
           </button>
@@ -251,53 +254,53 @@ const CustomerM = () => {
               setSearchTerm(e.target.value)
               setCurrentPage(1)
             }}
-            className="border p-2 mb-4 border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border text-white p-2 mb-4 bg-[#494F55] border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="flex flex-col">
-          <div className="-mx-3 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="-mx-3  -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block w-[100%] py-2 align-middle md:px-6 lg:px-8">
-              <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gray-50 dark:bg-gray-800">
+              <div className="overflow-hidden border rounded-lg border-gray-200 dark:border-gray-700 md:rounded-lg">
+                <table className="min-w-full divide-y  divide-gray-200  dark:divide-gray-700">
+                  <thead className="rounded-xl bg-[#2F2F2F] text-white dark:bg-gray-800">
                     <tr>
-                      <th scope="col" className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <th scope="col" className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-right  dark:text-gray-400">
                         <div className="flex justify-start">
 
                           <span>Customer ID</span>
                         </div>
                       </th>
-                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right  dark:text-gray-400">
                         <div className="flex items-center gap-x-3">
 
                           <span>Name</span>
                         </div>
                       </th>
-                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right  dark:text-gray-400">
                         <div className="flex items-center gap-x-3">
 
                           <span>Ph. No.</span>
                         </div>
                       </th>
-                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right  dark:text-gray-400">
                         <div className="flex items-center gap-x-3">
 
                           <span>Date</span>
                         </div>
                       </th>
-                      <th scope="col" className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-left text-gray-500 dark:text-gray-400">
+                      <th scope="col" className=" py-3.5 px-2 text-sm font-normal text-left rtl:text-left  dark:text-gray-400">
                         <div className="flex items-center gap-x-3">
 
                           <span>Total Sales</span>
                         </div>
                       </th>
-                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <th scope="col" className=" py-3.5 px-4 text-sm font-normal text-left rtl:text-right  dark:text-gray-400">
                         <div className="flex items-center gap-x-3">
 
                           <span>Remark </span>
                         </div>
                       </th>
-                      <th scope="col" className=" py-3.5 px-1 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                      <th scope="col" className=" py-3.5 px-1 text-sm font-normal text-left rtl:text-right  dark:text-gray-400">
                         <div className="flex items-center gap-x-3">
 
                           <span>Delete </span>
@@ -305,7 +308,7 @@ const CustomerM = () => {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                  <tbody className="bg-[#494F55] divide-y divide-grey-500 dark:divide-gray-700 dark:bg-gray-900">
                     {
                       currentOrders.length > 0 ? (
                         currentOrders.map((orderId) => {                     
@@ -324,34 +327,34 @@ const CustomerM = () => {
                                   >
                                     <div className="inline-flex items-center gap-x-3">
                                       <div className="flex items-center ">
-                                        <h2 className="font-medium text-blue-800 hover:text-blue-500 hover:underline dark:text-white ">{orderId}</h2>
+                                        <h2 className="font-medium text-white hover:text-blue-500 hover:underline dark:text-white ">{orderId}</h2>
                                       </div>
                                     </div>
                                   </Link>
                                 </td>
                                 <td className="px-1 py-2 text-xs whitespace-nowrap">
-                                  <div className="flex items-center ">
+                                  <div className="flex text-white items-center ">
                                     {customerDetails?.name}
                                   </div>
                                 </td>                         
                                 <td className="px-1 py-2 text-xs whitespace-nowrap">
-                                  <div className="flex items-center ">
+                                  <div className="flex text-white items-center ">
                                     {customerDetails?.phoneNo}
                                   </div>
                                 </td>                           
                                 <td className="px-1 py-2 text-xs whitespace-nowrap">
-                                  <div className="flex items-center">
+                                  <div className="flex text-white items-center">
                                     {customerDetails?.date}
                                   </div>
                                 </td>
 
                                 <td className="px-3 py-2 text-xs whitespace-nowrap">
-                                  <div className="flex items-center">
+                                  <div className="flex text-white items-center">
                                     {customerDetails?.totalSales}
                                   </div>
                                 </td>   
                                 <td className=" py-2 text-xs ">
-                                  <div className="justify-evenly flex-col">
+                                  <div className="justify-evenly text-white flex-col">
                                  
                                     <CustomerRemark 
                                     customerDetails={customerDetails} 

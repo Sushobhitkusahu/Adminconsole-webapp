@@ -100,7 +100,7 @@ const CustomerRemark = ({  customerId }) => {
             
             <button
                 onClick={() => setIsAddingRemark(true)}
-                className=" bg-blue-500 text-white px-2 py-1 rounded-lg  "
+                className="  bg-[#939292] px-2 py-1 rounded-lg  "
             >
                 <FontAwesomeIcon icon={faPlus} />
             </button>
