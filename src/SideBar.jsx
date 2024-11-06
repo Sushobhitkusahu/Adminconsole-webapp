@@ -28,40 +28,40 @@ const Sidebar = () => {
             </button>
 
             {/* Sidebar */}
-            <div className={`lg:w-64  bg-[#F4F7FE] shadow-lg  h-full fixed lg:static top-0 transition-transform duration-300 z-10 ${isOpen ? 'translate-x-0' : '-translate-x-64 lg:translate-x-0'}`}>
+            <div className={`lg:w-64  bg-[#2F2F2F] shadow-lg  h-full fixed lg:static top-0 transition-transform duration-300 z-10 ${isOpen ? 'translate-x-0' : '-translate-x-64 lg:translate-x-0'}`}>
                 <div className="flex items-center justify-center px-4 py-4 ">
-                    <a href="http://localhost:5173/">
+                    <a href="https://adminconsole-webapp.onrender.com">
                     <img src={logo} alt="Logo" className="h-12  w-32 mx-auto lg:mx-0 object-contain" />
                     </a>
                     
                 </div>
                 <hr/>
-                <ul className="mt-6 text-sm space-y-2 ">
-                    <li className="px-4 py-2 hover:bg-gray-200 hover:rounded-xl m-1">
+                <ul className="mt-6  text-sm space-y-2 ">
+                    <li className="px-4 py-2 text-white hover:bg-gray-200  hover:rounded-xl m-1">
                         <NavLink
                             to="device-data"
                             className={({ isActive }) =>
-                                isActive ? "text-blue-500 block" : "text-gray-700 block"
+                                isActive ? "text-blue-500 block" : " block text-white hover:text-black"
                             }
                         >
-                            <FontAwesomeIcon icon={faDatabase} className="h-4 inline-block pr-3" /> Device Data
+                            <FontAwesomeIcon icon={faDatabase} className="h-4  inline-block pr-3" /> Device Data
                         </NavLink>
                     </li>
                     <li className="px-4 py-2 hover:bg-gray-200 hover:rounded-xl m-1">
                         <NavLink
                             to="device-registration"
                             className={({ isActive }) =>
-                                isActive ? "text-blue-500 block" : "text-gray-700 block"
+                                isActive ? "text-blue-500 block" : "text-white block hover:text-black"
                             }
                         >
-                            <FontAwesomeIcon icon={faDesktop} className="h-4 inline-block pr-2" /> Device Registration
+                            <FontAwesomeIcon icon={faDesktop} className="h-4 inline-block  pr-2" /> Device Registration
                         </NavLink>
                     </li>
                     <li className="px-4 py-2 hover:bg-gray-200 hover:rounded-xl m-1">
                         <NavLink
                             to="user-data"
                             className={({ isActive }) =>
-                                isActive ? "text-blue-500 block" : "text-gray-700 block"
+                                isActive ? "text-blue-500 block" : "text-white block hover:text-black"
                             }
                         >
                             <FontAwesomeIcon icon={faUsers} className="h-4 inline-block pr-2" /> User Data
@@ -71,7 +71,7 @@ const Sidebar = () => {
                         <NavLink
                             to="order"
                             className={({ isActive }) =>
-                                isActive ? "text-blue-500 block" : "text-gray-700 block"
+                                isActive ? "text-blue-500 block" : "text-white block hover:text-black"
                             }
                         >
                             <FontAwesomeIcon icon={faBox} className="h-4 inline-block pr-3" /> Order Management
@@ -81,7 +81,7 @@ const Sidebar = () => {
                         <NavLink
                             to="stock"
                             className={({ isActive }) =>
-                                isActive ? "text-blue-500 block" : "text-gray-700 block"
+                                isActive ? "text-blue-500 block" : "text-white block hover:text-black"
                             }
                         >
                             <FontAwesomeIcon icon={faWarehouse} className="h-4 inline-block pr-2" /> Stock Management
@@ -93,7 +93,7 @@ const Sidebar = () => {
                             <NavLink
                                 to="authorization"
                                 className={({ isActive }) =>
-                                    isActive ? "text-blue-500 block" : "text-gray-700 block"
+                                    isActive ? "text-blue-500 block" : "text-white block hover:text-black"
                                 }
                             >
                                 <FontAwesomeIcon icon={faUsers} className="h-4 inline-block pr-2" /> Authorization
