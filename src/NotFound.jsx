@@ -10,7 +10,9 @@ const NotFound = () => {
 
     return (
         <div>
+
             <section className="bg-black dark:bg-gray-900 ">
+
             
                 <div className="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
                     <div className="w-full lg:w-1/2">
@@ -30,8 +32,9 @@ const NotFound = () => {
 
                     <div className="relative w-full mt-12 lg:w-1/2 lg:mt-0">
                         <img className="w-full max-w-lg lg:mx-auto invert brightness" src={logo} alt="404 Not Found" />
-                    </div>
+                    </div> 
                 </div>
+            
             </section>
         </div>
     );
