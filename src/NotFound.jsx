@@ -29,7 +29,7 @@ const NotFound = () => {
 
                     <div className="relative w-full mt-12 lg:w-1/2 lg:mt-0">
                         <img className="w-full max-w-lg lg:mx-auto invert brightness" src={logo} alt="404 Not Found" />
-                    </div>
+                    </div> 
                 </div>
             </section>
         </div>
