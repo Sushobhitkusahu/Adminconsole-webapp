@@ -64,7 +64,7 @@ const Login = () => {
                                                 <h2 className="max-w-xl mt-3 text-gray-300"><strong>Manage stock</strong></h2>
                                                 <p className="max-w-xl mt-3 text-gray-300">
                                                     <FontAwesomeIcon icon={faMoneyBillTrendUp} className="pr-2 "/>
-                                                    Trust of 1000+ Farmers. We are proud to serve 1000+ farmers from 20+ states in India. The locations on the map show our devices installed at various farmers' fields, demonstrating how Indian farmers are quickly adapting to smart irrigation technologies.
+                                                    Trust of 1000+ Farmers. We are proud to serve 1000+ farmers from 20+ states in India. The locations on the map show our devices installed at various farmers fields, demonstrating how Indian farmers are quickly adapting to smart irrigation technologies.
                                                 </p>
                                             </div>
                                         </div>
