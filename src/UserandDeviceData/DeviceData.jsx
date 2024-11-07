@@ -169,7 +169,7 @@ const DeviceData = () => {
 
   
     <ToastContainer />
-      <h1 className="flex justify-center items-center mb-4 text-xl font-semibold text-gray-800 dark:text-gray-400">Device Data</h1>
+      <h1 className="flex justify-center items-center mb-4 text-xl font-semibold text-white dark:text-gray-400">Device Data</h1>
     
     
       {/* Search Bar */}
@@ -180,12 +180,12 @@ const DeviceData = () => {
            value={userId}
            onChange={(e) => setUserId(e.target.value)}
            placeholder="Enter Search ID"
-           className="w-full sm:w-auto px-4 py-2 font-medium border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+           className="w-full sm:w-auto bg-[#494F55] px-4 py-2 text-gray-200 font-medium border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-white"
           />
   
         <button 
          onClick={handleSearch} 
-         className=" sm:w-auto px-4 py-2 font-thin tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+         className=" sm:w-auto px-4 py-2 font-thin tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#2977a4] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-white focus:ring-opacity-80"
          >
          <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-2" /> Search
         </button>
