@@ -67,7 +67,11 @@ const OrdersNew = () => {
 
         const { amountDue, date, totalAmount, invoiceId, channel, salesPersonName, orderItems } = formData;
         if (!amountDue || !date || !totalAmount || !invoiceId || !channel || !salesPersonName || orderItems.length === 0) {
-            toast.error("Please fill all fields and add at least one order item.");
+            toast.error("Please fill all fields and add at least one order item.", {
+                theme: "dark",
+                autoClose: 2000,
+
+            });
             return; // Prevent further execution if validation fails
         }
 
@@ -78,11 +82,19 @@ const OrdersNew = () => {
                 ...formData,
                 customerId: orderId // Save the orderId directly as customerId
             });
-            toast.success("Order added successfully!");
+            toast.success("Order added successfully!", {
+                theme: "dark",
+                autoClose: 2000,
+
+            });
             setShowAddOrder(false); // Close the portal
         } catch (error) {
             console.error("Error adding order:", error);
-            toast.error("Failed to add order. Please try again.");
+            toast.error("Failed to add order. Please try again.", {
+                theme: "dark",
+                autoClose: 2000,
+
+            });
         }
     }
 
@@ -225,7 +237,11 @@ const OrdersNew = () => {
                     setUploadProgress((prevProgress) => ({ ...prevProgress, [orderId]: progress }));
                 },
                 (error) => {
-                    toast.error(`Upload failed: ${error.message}`);
+                    toast.error(`Upload failed: ${error.message}`, {
+                        theme: "dark",
+                        autoClose: 2000,
+
+                    });
                     reject(error);
                 },
                 async () => {
@@ -233,7 +249,11 @@ const OrdersNew = () => {
                     const order_refer = ref(db, `ordersNew/${orderId}`);
                     await update(order_refer, { bills: url });
 
-                    toast.success(`Upload Successful for OrderID: ${orderId}`);
+                    toast.success(`Upload Successful for OrderID: ${orderId}`), {
+                        theme: "dark",
+                        autoClose: 2000,
+
+                    };
                     setUploadProgress((prevProgress) => ({ ...prevProgress, [orderId]: 100 }));
 
                     setTimeout(() => {
@@ -260,9 +280,17 @@ const OrdersNew = () => {
         try {
             const order_refer = ref(db, `ordersNew/${orderId}`);
             await update(order_refer, { isDeleted: true });
-            toast.success(`Order ${orderId} marked as deleted.`);
+            toast.success(`Order ${orderId} marked as deleted.`, {
+                theme: "dark",
+                autoClose: 2000,
+
+            });
         } catch (error) {
-            toast.error(`Failed to delete order: ${error.message}`);
+            toast.error(`Failed to delete order: ${error.message}`, {
+                theme: "dark",
+                autoClose: 2000,
+
+            });
         }
         finally {
             setDeleteOrder(null)
@@ -278,19 +306,23 @@ const OrdersNew = () => {
             await update(order_refer, { isDeleted: true });
             setDeletedItems(prev => new Set(prev).add(imei));
 
-            toast.success(`Order ${imei} marked as deleted.`);
+            toast.success(`Order ${imei} marked as deleted.`, {
+                theme: "dark",
+                autoClose: 2000,
+
+            });
         } catch (error) {
-            toast.error(`Failed to delete order: ${error.message}`);
+            toast.error(`Failed to delete order: ${error.message}`, {
+                theme: "dark",
+                autoClose: 2000,
+            });
         }
         finally {
             setDeleteDevice(null)
         }
     };
-
-
     return (
         <div className="max-w-6xl mx-auto ">  <ToastContainer />
-
             <h2 className="text-lg font-semibold my-4">Orders for Customer ID: {orderId} </h2>
             <div className='flex justify-end items-end '>
                 <button type='button'
@@ -299,13 +331,7 @@ const OrdersNew = () => {
                 >
                     Add Order
                 </button>
-
             </div>
-
-
-
-
-
             <table className="min-w-full bg-white border border-gray-300  divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
                     <tr>

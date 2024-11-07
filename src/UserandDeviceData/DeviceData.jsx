@@ -141,7 +141,11 @@ const DeviceData = () => {
 
         getData(); // Fetch the updated data
         dispatch(setDeviceData(editData));// Update local state
-        toast.success("Data updated successfully!");
+        toast.success("Data updated successfully!", {
+          theme: "dark",
+          autoClose: 2000,
+
+        });
         dispatch(toggleEditing()); // Exit edit mode
       } else {
         alert("MAC Address not found under admin collection");

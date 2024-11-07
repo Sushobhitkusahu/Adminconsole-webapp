@@ -29,7 +29,11 @@ const DeviceRemark = ({ imei }) => {
     //handling add remark 
     const handleAddRemark = () => {
         if (newRemark.trim() === '' || remarkName.trim() === '') {
-            toast.error('Please fill both');
+            toast.error('Please fill both', {
+                theme: "dark",
+                autoClose: 2000,
+
+            });
             return;
         }
         const remarkData = {

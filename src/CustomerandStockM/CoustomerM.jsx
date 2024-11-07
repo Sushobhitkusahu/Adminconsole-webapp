@@ -71,12 +71,20 @@ const CustomerM = () => {
   const handleDelete = async (orderId) => {
     //console.log('Current user role:', userRole); // Log the userRole
     if (userRole !== 'admin' && userRole !== 'manager') {
-      toast.error('Unauthorized: Only admins or managers can delete orders.');
+      toast.error('Unauthorized: Only admins or managers can delete orders.', {
+        theme: "dark",
+        autoClose: 2000,
+
+      });
       return;
     }
 
     if (enteredOrderId !== deleteOrder) {
-      toast.error('Order ID does not match!');
+      toast.error('Order ID does not match!', {
+        theme: "dark",
+        autoClose: 2000,
+
+      });
       return;
     }
     try {
@@ -107,7 +115,11 @@ const CustomerM = () => {
       // Reset state
       setDeleteOrder(null);
       setEnteredOrderId(''); // Clear the input after deletion
-      toast.success('Order deleted successfully!');
+      toast.success('Order deleted successfully!', {
+        theme: "dark",
+        autoClose: 2000,
+
+      });
     } catch (error) {
       toast.error(`Failed to delete order or storage: ${error.message}`);
     }
@@ -123,10 +135,18 @@ const CustomerM = () => {
     try {
       const orderRef = ref(db, `orders/${orderId}/orderDetails/`);
       await update(orderRef, formData);
-      toast.success(`Order ${orderId} updated successfully`);
+      toast.success(`Order ${orderId} updated successfully`, {
+        theme: "dark",
+        autoClose: 2000,
+
+      });
       setEditingOrder(null);
     } catch (error) {
-      toast.error(`Failed to update order: ${error.message}`);
+      toast.error(`Failed to update order: ${error.message}`, {
+        theme: "dark",
+        autoClose: 2000,
+
+      });
     }
   };
 
@@ -136,7 +156,11 @@ const CustomerM = () => {
   const addOrder = (e) => {
     e.preventDefault()
         if (!orderData.customerId) {
-      toast.error('Customer ID is required');
+          toast.error('Customer ID is required', {
+            theme: "dark",
+            autoClose: 2000,
+
+          });
       return;
     }
     const customerId = orderData.customerId;
