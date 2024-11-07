@@ -208,7 +208,7 @@ const handleMacChange = (e, mac, key) => {
 
         {/* User Information */}
         {userData && (
-          <div className="p-4  mb-4 shadow-md rounded bg-[#494F55]">
+          <div className="p-4  mb-4 shadow-md rounded bg-[#333333] ">
             <h2 className="text-lg font-bold text-gray-200 mb-2">User Information</h2>
 
             <div>
@@ -218,7 +218,7 @@ const handleMacChange = (e, mac, key) => {
                 value={userData.active_qr || ""}
                 onChange={(e) => handleChange(e, 'active_qr')}
                 disabled={!userEditing}
-                className="w-full p-2 border text-gray-200 border-gray-300 rounded mb-2"
+                className="w-full p-2 border text-gray-200 bg-[#494F55] border-gray-300 rounded mb-2"
               />
             </div>
             {/* <div>
@@ -295,7 +295,7 @@ const handleMacChange = (e, mac, key) => {
 
         {/* Display MAC addresses and selected fields */}
         {Object.keys(macAddresses).length > 0 && Object.entries(macAddresses).map(([mac, data]) => (
-          <div key={mac} className="p-4 mb-4 shadow-md rounded bg-[#494F55]">
+          <div key={mac} className="p-4 mb-4 shadow-md rounded bg-[#333333]">
             <h2 className="text-lg font-bold mb-2 text-gray-200">MAC Address: {mac}</h2>
             <div>
               <label className="block mb-2 text-gray-200">MNV:</label>
@@ -304,7 +304,7 @@ const handleMacChange = (e, mac, key) => {
                 value={data.mnv || ""}
                 onChange={(e) => handleMacChange(e, mac, 'mnv')}
                 disabled={!macEditing[mac]}
-                className="w-full bg-[#494F55] p-2 border border-gray-300 rounded mb-2"
+                className="w-full bg-[#494F55] text-white p-2 border border-gray-300 rounded mb-2"
               />
             </div>
             <div>
