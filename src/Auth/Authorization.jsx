@@ -144,7 +144,7 @@ const generatorPassword =()=>{
 
             {/* Users Table */}
             
-            <table className="min-w-full text-white divide-y divide-gray-700 dark:divide-gray-700 rounded-xl ">
+            <table className="min-w-full text-white divide-y divide-white dark:divide-gray-700 rounded-xl ">
                 <thead className="bg-[#2F2F2F] dark:bg-gray-800 rounded-t-xl">
                     <tr>
 
@@ -178,7 +178,7 @@ const generatorPassword =()=>{
                         </th>
                     </tr>
                 </thead>
-                <tbody className="bg-[#494F55] divide-y divide-gray-700 dark:divide-gray-700 dark:bg-gray-900"> 
+                <tbody className="bg-[#494F55] divide-y divide-white dark:divide-gray-700 dark:bg-gray-900"> 
                     {users.map((user) => (
                         <tr key={user.email}>
                             <td className="px-1 py-2 text-xs whitespace-nowrap">

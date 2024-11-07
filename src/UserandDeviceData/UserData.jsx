@@ -157,7 +157,7 @@ const handleMacChange = (e, mac, key) => {
   return (<>
   
     <ToastContainer />
-    <h1 className="flex justify-center items-center  text-xl font-semibold mb-0 text-gray-800 dark:text-gray-400 ">User Data</h1>
+    <h1 className="flex justify-center items-center  text-xl font-semibold mb-0 text-white dark:text-gray-400 ">User Data</h1>
     <div className=' flex  justify-start items-start w-full  '>
 
       <div className=" rounded-3xl w-full   p-6  max-w-[670px] mx-auto">
@@ -174,12 +174,12 @@ const handleMacChange = (e, mac, key) => {
           value={phoneNumber}
                 onChange={(e) => dispatch(setPhoneNumber(e.target.value))}
            placeholder="Enter Phone Number"
-           className="w-full sm:w-auto px-4 py-2 font-medium border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+           className="w-full bg-[#333333] sm:w-auto px-4 text-gray-300 py-2 font-medium border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
   
         <button 
          onClick={handleSearch} 
-         className=" sm:w-auto px-4 py-2 font-thin tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+         className=" sm:w-auto px-4 py-2 font-thin tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#2977a4] rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
          >
          <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-2" /> Search
         </button>
@@ -200,17 +200,17 @@ const handleMacChange = (e, mac, key) => {
 
         {/* User Information */}
         {userData && (
-          <div className="p-4 mb-4 shadow-md rounded bg-white">
-            <h2 className="text-lg font-bold mb-2">User Information</h2>
+          <div className="p-4  mb-4 shadow-md rounded bg-[#494F55]">
+            <h2 className="text-lg font-bold text-gray-200 mb-2">User Information</h2>
 
             <div>
-              <label className="block mb-2">Active QR:</label>
+              <label className="block mb-2 text-gray-200">Active QR:</label>
               <input
                 type="text"
                 value={userData.active_qr || ""}
                 onChange={(e) => handleChange(e, 'active_qr')}
                 disabled={!userEditing}
-                className="w-full p-2 border border-gray-300 rounded mb-2"
+                className="w-full p-2 border text-gray-200 border-gray-300 rounded mb-2"
               />
             </div>
             {/* <div>
@@ -287,16 +287,16 @@ const handleMacChange = (e, mac, key) => {
 
         {/* Display MAC addresses and selected fields */}
         {Object.keys(macAddresses).length > 0 && Object.entries(macAddresses).map(([mac, data]) => (
-          <div key={mac} className="p-4 mb-4 shadow-md rounded bg-white">
-            <h2 className="text-lg font-bold mb-2">MAC Address: {mac}</h2>
+          <div key={mac} className="p-4 mb-4 shadow-md rounded bg-[#494F55]">
+            <h2 className="text-lg font-bold mb-2 text-gray-200">MAC Address: {mac}</h2>
             <div>
-              <label className="block mb-2">MNV:</label>
+              <label className="block mb-2 text-gray-200">MNV:</label>
               <input
                 type="number"
                 value={data.mnv || ""}
                 onChange={(e) => handleMacChange(e, mac, 'mnv')}
                 disabled={!macEditing[mac]}
-                className="w-full p-2 border border-gray-300 rounded mb-2"
+                className="w-full bg-[#494F55] p-2 border border-gray-300 rounded mb-2"
               />
             </div>
             <div>
