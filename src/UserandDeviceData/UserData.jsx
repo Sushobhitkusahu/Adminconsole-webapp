@@ -105,7 +105,11 @@ const UserData = () => {
         dispatch(seterror(null));
         dispatch(setUserEditing(false));
         fetchUserDataByPhone(phoneNumber); 
-        toast.success("User data updated successfully!");
+        toast.success("User data updated successfully!", {
+          theme: "dark",
+          autoClose: 2000,
+
+        });
       } catch (err) {
         dispatch(seterror('Error updating data.'));
         toast.error("Failed to update user data.");
@@ -132,7 +136,11 @@ const UserData = () => {
           <div>
             MAC address <strong>{mac}</strong> updated successfully!
           </div>
-        );
+          , {
+            theme: "dark",
+            autoClose: 2000,
+
+          } );
 
       } catch (err) {
         dispatch(seterror('Error updating MAC address.'));

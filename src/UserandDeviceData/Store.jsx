@@ -125,9 +125,7 @@ export const {
     setPhoneNumber,
     setUserData,
     setMacAddresses,
-
     seterror,
-
     setloadingg,
     setUserEditing,
     setMacEditing,
